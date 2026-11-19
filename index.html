@@ -1,84 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pyari Jigglu 💖 — Apke Bhondu Ka Paigaam</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #fff0f5 0%, #f3e8ff 48%, #ffe4e6 100%); min-height: 100vh; overflow-x: hidden; color: #4a1d34; }
-        .font-script { font-family: 'Great Vibes', cursive; }
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .glass-panel { background: rgba(255,255,255,.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1.5px solid rgba(244,114,182,.35); box-shadow: 0 20px 50px rgba(219,39,119,.14), 0 4px 15px rgba(168,85,247,.08); }
-        .pulse-heart { animation: pulseHeart 2.2s infinite ease-in-out; }
-        @keyframes pulseHeart { 0%,100% { transform: scale(1); filter: drop-shadow(0 6px 15px rgba(236,72,153,.35)); } 50% { transform: scale(1.08); filter: drop-shadow(0 10px 25px rgba(236,72,153,.55)); } }
-        .healer-bubble { animation: floatBubble 3.2s ease-in-out infinite; transition: all .3s cubic-bezier(.34,1.56,.64,1); }
-        .healer-bubble:nth-child(even) { animation-delay: 1.1s; }
-        @keyframes floatBubble { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        .flip-card { perspective: 1000px; height: 145px; cursor: pointer; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform .65s cubic-bezier(.34,1.56,.64,1); transform-style: preserve-3d; }
-        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front,.flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 1.25rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; }
-        .flip-card-front { background: linear-gradient(135deg,#fff5f7 0%,#f5f3ff 100%); border: 1.5px solid rgba(244,114,182,.4); box-shadow: 0 8px 20px rgba(236,72,153,.08); }
-        .flip-card-back { background: linear-gradient(135deg,#fdf2f8 0%,#fae8ff 100%); border: 1.5px solid #ec4899; transform: rotateY(180deg); box-shadow: 0 10px 25px rgba(236,72,153,.16); }
-        .stage-animate { animation: stageFadeUp .65s cubic-bezier(.16,1,.3,1) forwards; }
-        @keyframes stageFadeUp { from { opacity: 0; transform: translateY(22px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        #runaway-btn { transition: all .22s cubic-bezier(.34,1.56,.64,1); position: relative; }
-        .burst-emoji { position: fixed; pointer-events: none; z-index: 60; font-size: 1.5rem; animation: burstFly 1.6s ease-out forwards; }
-        @keyframes burstFly { 0% { transform: translate(0,0) scale(.5); opacity: 1; } 100% { transform: translate(var(--tx),var(--ty)) scale(1.4) rotate(var(--rot)); opacity: 0; } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Forever? 💖✨</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 50%, #780206 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    /* Floating Background Hearts */
+    .heart-bg {
+      position: absolute;
+      top: -10vh;
+      font-size: 1.5rem;
+      animation: fall 6s linear infinite;
+      opacity: 0.7;
+      z-index: 1;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Glassmorphism Card */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      padding: 30px 22px;
+      border-radius: 28px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      width: 100%;
+      max-width: 380px;
+      border: 3px solid #fff0f5;
+    }
+
+    .badge {
+      background: #ffe6ea;
+      color: #ff0054;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    h1 { color: #800f2f; font-size: 1.7rem; margin: 10px 0; }
+    p { color: #590d22; font-size: 1.05rem; line-height: 1.5; margin-bottom: 20px; }
+
+    /* Interactive Buttons */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      min-height: 80px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    #yesBtn {
+      background: linear-gradient(45deg, #ff0054, #ff5400);
+      color: white;
+      box-shadow: 0 5px 20px rgba(255, 0, 84, 0.5);
+      z-index: 12;
+    }
+
+    #noBtn {
+      background: #ffffff;
+      color: #ff0054;
+      border: 2px solid #ff0054;
+      z-index: 11;
+      white-space: nowrap;
+    }
+
+    /* Photo & Video Styling */
+    .couple-photo,
+    .couple-video {
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 4px solid #ff4d6d;
+      box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+      margin: 15px 0;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #successCard { display: none; }
+  </style>
 </head>
-<body class="flex items-center justify-center p-4 sm:p-6 relative selection:bg-pink-400 selection:text-white">
-<canvas id="bg-canvas"></canvas>
-<main class="w-full max-w-md z-10 my-auto">
-    <section id="stage-1" class="glass-panel rounded-3xl p-7 sm:p-9 text-center stage-animate">
-        <span class="inline-block px-4 py-1.5 rounded-full bg-pink-100/90 border border-pink-300/70 text-pink-700 text-xs font-bold tracking-wider uppercase mb-5">Dil Se Ek Paigaam 💌</span>
-        <div class="relative w-40 h-32 mx-auto my-3 flex items-center justify-center pulse-heart">
-            <svg viewBox="0 0 220 160" class="w-full h-full"><rect x="18" y="26" width="184" height="112" rx="20" fill="#fff5f7" stroke="#f472b6" stroke-width="3.5"/><path d="M20 135 L110 78 L200 135" fill="#fce7f3" stroke="#f472b6" stroke-width="2.5"/><path d="M20 29 L110 92 L200 29" fill="#fbcfe8" stroke="#ec4899" stroke-width="3"/></svg>
-            <div class="absolute w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white text-2xl shadow-lg flex items-center justify-center border-2 border-white">💖</div>
-        </div>
-        <h1 class="font-script text-4xl sm:text-5xl text-pink-600 mt-4 mb-2 leading-snug">Pyari Jigglu,</h1>
-        <p class="text-lg sm:text-xl font-bold text-slate-800 mb-6 leading-relaxed px-1">apka bhondu kuch bolna chahta h apko... 💌</p>
-        <button onclick="openStage2()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold text-base shadow-lg shadow-pink-400/40 transform hover:scale-[1.02] active:scale-95 transition-all cursor-pointer animate-pulse">Kholo Meri Jaan ✨</button>
-    </section>
-    <section id="stage-2" class="hidden glass-panel rounded-3xl p-6 sm:p-7 stage-animate">
-        <div class="text-center mb-4"><span class="inline-block px-3.5 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold uppercase tracking-wider mb-1.5">Step 1: Dil Se Maafi 🥺</span><h2 class="font-script text-4xl text-pink-600 leading-tight">Mene bhot dil dukhaya h apka... 💔</h2><p class="text-xs sm:text-sm text-slate-600 mt-1.5 font-medium">Us har ek chiz ke liye dil se maafi mangta hu main. Har bubble par tap karke apne Bhondu ko maaf kar do...</p></div>
-        <div class="bg-white/90 rounded-2xl p-3.5 border border-pink-200 mb-4 shadow-inner"><div class="flex justify-between items-center text-xs font-bold mb-1.5"><span class="text-pink-700">Jigglu's Heart Meter 💖</span><span id="heart-percent" class="text-purple-700">0%</span></div><div class="w-full h-3.5 bg-pink-100 rounded-full overflow-hidden p-0.5"><div id="heart-bar" class="h-full w-0 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 transition-all duration-500 ease-out"></div></div></div>
-        <div id="mistake-list" class="space-y-2.5 mb-4"></div>
-        <div id="apology-reveal-box" class="hidden rounded-2xl bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-300 p-4 text-center shadow-sm"><p id="apology-reveal-text" class="text-sm font-bold text-pink-800 leading-relaxed"></p></div>
-        <button id="to-praise-btn" onclick="openStage3()" class="hidden mt-4 w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-base shadow-lg shadow-purple-400/40 transform active:scale-95 transition-all cursor-pointer animate-bounce">Aage Dekho Meri Jaan ✨👑</button>
-    </section>
-    <section id="stage-3" class="hidden glass-panel rounded-3xl p-6 sm:p-7 stage-animate">
-        <div class="text-center mb-5"><span class="inline-block px-3.5 py-1 rounded-full bg-amber-100/90 border border-amber-300 text-amber-800 text-xs font-bold uppercase tracking-wider mb-1.5">Step 2: Meri Queen Ki Tareef 👑</span><h2 class="font-script text-3xl sm:text-4xl text-pink-600 leading-tight">Ab Zara Meri Pyari Jigglu Ki Khoobsurati Ki Baat Ho Jaye... ✨👑</h2><p class="text-xs text-slate-600 mt-1 font-medium">Har card par tap karke dekho aapka Bhondu aapke baare mein kya sochta hai 👇</p></div>
-        <div id="praise-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5"></div>
-        <button id="to-final-btn" onclick="openStage4()" class="hidden w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold text-base shadow-lg shadow-pink-400/40 transform active:scale-95 transition-all cursor-pointer">Aakhiri Baat Suno... 💌</button>
-    </section>
-    <section id="stage-4" class="hidden glass-panel rounded-3xl p-6 sm:p-8 stage-animate">
-        <div class="border-b border-pink-200 pb-3 mb-4 flex items-center justify-between"><div><span class="text-[11px] font-bold uppercase tracking-widest text-purple-600 block">Dil Ki Gehraiyon Se</span><h2 class="font-script text-4xl text-pink-600">Pyari Jigglu 💖</h2></div><span class="text-3xl">🌹🥺</span></div>
-        <div class="bg-gradient-to-br from-pink-50/90 via-white to-purple-50/90 border border-pink-200/80 rounded-2xl p-5 shadow-inner space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed font-medium"><p>"Pyari Jigglu, <span class="text-pink-700 font-bold">mene bhot dil dukhaya h apka, us har chiz ke liye mafi mangta hu me.</span>"</p><p>"Aap jitni khoobsurat baahar se ho, usse kahin zyada pyara aapka dil hai. Aapka yeh Bhondu sirf aur sirf aapka hi hai—hamesha." ❤️</p><div class="pt-2 text-right"><span class="text-xs text-slate-500 block">Sirf aapka apna,</span><span class="font-script text-2xl text-purple-700 font-bold">Aapka Bhondu 🥰</span></div></div>
-        <div id="final-buttons-box" class="mt-6 flex flex-col gap-3 relative min-h-[120px]"><button onclick="acceptForgiveness()" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-base shadow-lg shadow-emerald-400/40 transform hover:scale-[1.02] active:scale-95 transition-all cursor-pointer z-20">Maaf Kiya Mere Bhondu ❤️</button><button id="runaway-btn" onclick="dodgeButton()" onmouseover="dodgeButton()" class="w-full py-3 px-5 rounded-2xl bg-rose-100 hover:bg-rose-200 border border-rose-300 text-rose-700 font-bold text-sm cursor-pointer z-10 select-none">Abhi Bhi Thoda Gussa Hoon 😤</button></div>
-        <div id="celebration-pass" class="hidden mt-5 stage-animate"><div class="rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 p-1 shadow-xl"><div class="bg-white rounded-[14px] p-5 text-center"><div class="text-4xl mb-1 animate-bounce">🎉💖👑</div><h3 class="font-script text-3xl text-pink-600 font-bold">Yay! Jigglu Maan Gayi! ❤️</h3><p class="text-xs text-slate-500 mb-4 font-medium">Ab kabhi aapka dil nahi dukhaunga, yeh aapke Bhondu ka pakka waada hai!</p><div class="border-2 border-dashed border-pink-400 bg-pink-50/80 rounded-xl p-4 relative"><span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-pink-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-0.5 rounded-full whitespace-nowrap">Official Bhondu's Promise Pass 🎟️</span><p class="font-bold text-purple-800 text-sm sm:text-base mt-1">Unlimited Pyar, Care &amp; 1x Fresh Kaju Barfi Pass 🍬🤗</p><p class="text-xs text-slate-600 mt-1">Issued exclusively to: <strong>Pyari Jigglu</strong> • Valid Forever ❤️</p></div><button onclick="resetApp()" class="mt-4 text-xs font-bold text-pink-600 hover:text-pink-800 underline cursor-pointer">Phir Se Dekhein ↺</button></div></div></div>
-    </section>
-</main>
-<script>
-const canvas=document.getElementById('bg-canvas');const ctx=canvas.getContext('2d');let particles=[];
-function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}window.addEventListener('resize',resizeCanvas);resizeCanvas();
-const symbols=['💖','✨','🌸','💕','💜','👑'];for(let i=0;i<26;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*14+12,speedY:Math.random()*.7+.3,speedX:(Math.random()-.5)*.4,symbol:symbols[Math.floor(Math.random()*symbols.length)],opacity:Math.random()*.5+.35})}
-function animateCanvas(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{ctx.globalAlpha=p.opacity;ctx.font=`${p.size}px sans-serif`;ctx.fillText(p.symbol,p.x,p.y);p.y-=p.speedY;p.x+=p.speedX;if(p.y< -30){p.y=canvas.height+20;p.x=Math.random()*canvas.width}});requestAnimationFrame(animateCanvas)}animateCanvas();
-const mistakesData=[{prompt:'Kabhi anjaane mein aapka dil dukhaya ho toh...',reveal:'Mene bhot dil dukhaya h apka, us har chiz ke liye mafi mangta hu me. 🙏'},{prompt:'Kabhi meri kisi baat se aapki aankhon mein aansu aaye hon...',reveal:'Aapki ek muskaan ke liye sab kuch kurbaan hai, maaf kar do apne Bhondu ko. 🥺'},{prompt:'Kabhi aapko samajhne mein thodi si bhi der kar di ho...',reveal:'Main seekh raha hoon, par aapse pyaar sabse zyada karta hoon. ❤️'},{prompt:'Kabhi meri wajah se aap udaas ya pareshan hui hon...',reveal:'Aapki khushi hi meri duniya hai, ab kabhi udaas nahi hone dunga. ✨'}];let healedCount=0;
-function openStage2(){document.getElementById('stage-1').classList.add('hidden');document.getElementById('stage-2').classList.remove('hidden');renderMistakes();burstHearts(window.innerWidth/2,window.innerHeight/2,16)}
-function renderMistakes(){const list=document.getElementById('mistake-list');list.innerHTML='';healedCount=0;document.getElementById('heart-percent').innerText='0%';document.getElementById('heart-bar').style.width='0%';document.getElementById('apology-reveal-box').classList.add('hidden');document.getElementById('to-praise-btn').classList.add('hidden');mistakesData.forEach(item=>{const btn=document.createElement('button');btn.className='healer-bubble w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-pink-100 via-white to-purple-100 hover:from-pink-200 hover:to-purple-200 border border-pink-300 shadow-sm flex items-center justify-between text-left cursor-pointer';btn.innerHTML=`<span class="text-xs sm:text-sm font-bold text-slate-800 pr-2">${item.prompt}</span><span class="text-xs bg-pink-500 text-white px-2.5 py-1 rounded-full font-bold shrink-0">Tap 💖</span>`;btn.onclick=e=>healMistake(item,btn,e);list.appendChild(btn)})}
-function healMistake(item,btn,event){if(btn.dataset.healed==='true')return;btn.dataset.healed='true';const rect=btn.getBoundingClientRect();burstHearts(event.clientX||rect.left+rect.width/2,event.clientY||rect.top+rect.height/2,14);btn.classList.remove('healer-bubble','from-pink-100','via-white','to-purple-100');btn.classList.add('bg-emerald-50/95','border-emerald-300','cursor-default');btn.innerHTML=`<span class="text-xs sm:text-sm font-bold text-emerald-800">${item.reveal}</span><span class="text-xs bg-emerald-500 text-white px-2 py-0.5 rounded-full font-bold shrink-0 ml-2">Maaf ❤️</span>`;document.getElementById('apology-reveal-text').innerText=item.reveal;document.getElementById('apology-reveal-box').classList.remove('hidden');healedCount++;const pct=Math.round(healedCount/mistakesData.length*100);document.getElementById('heart-percent').innerText=`${pct}%`;document.getElementById('heart-bar').style.width=`${pct}%`;if(healedCount===mistakesData.length)setTimeout(()=>{document.getElementById('to-praise-btn').classList.remove('hidden');burstHearts(window.innerWidth/2,window.innerHeight*.7,22)},400)}
-const praiseCardsData=[{icon:'😊',title:'Aapki Muskaan',text:'Jab aap muskurati ho na, toh lagta hai poori duniya ki saari khoobsurati ek hi jagah simat gayi ho.'},{icon:'👀✨',title:'Aapki Aankhein',text:'Aapki aankhon mein woh masumiyat aur chamak hai jisme aapka Bhondu har roz kho jata hai.'},{icon:'🌸',title:'Aapki Sadgi aur Noor',text:'Bina kisi sajawat ke bhi aap itni pyari aur khoobsurat lagti ho ki nazrein hatane ka mann hi nahi karta.'},{icon:'💖',title:'Meri Kaju Barfi',text:'Saari duniya ek taraf, aur meri Jigglu ki khoobsurati aur masumiyat ek taraf—aap sach mein sabse khaas ho.'}];let flippedCardsCount=0;
-function openStage3(){document.getElementById('stage-2').classList.add('hidden');document.getElementById('stage-3').classList.remove('hidden');renderPraiseCards();burstHearts(window.innerWidth/2,window.innerHeight/3,18)}
-function renderPraiseCards(){const grid=document.getElementById('praise-grid');grid.innerHTML='';flippedCardsCount=0;document.getElementById('to-final-btn').classList.add('hidden');praiseCardsData.forEach(card=>{const wrapper=document.createElement('div');wrapper.className='flip-card';wrapper.innerHTML=`<div class="flip-card-inner"><div class="flip-card-front"><span class="text-3xl mb-1.5">${card.icon}</span><h3 class="font-bold text-pink-700 text-sm">${card.title}</h3><span class="text-[11px] text-purple-600 font-semibold mt-1">Tap to reveal ✨</span></div><div class="flip-card-back"><p class="text-xs font-bold text-slate-800 leading-relaxed">${card.text}</p></div></div>`;wrapper.onclick=e=>{if(!wrapper.classList.contains('flipped')){wrapper.classList.add('flipped');flippedCardsCount++;burstHearts(e.clientX||window.innerWidth/2,e.clientY||window.innerHeight/2,10);if(flippedCardsCount>=3)document.getElementById('to-final-btn').classList.remove('hidden')}else wrapper.classList.toggle('flipped')};grid.appendChild(wrapper)})}
-function openStage4(){document.getElementById('stage-3').classList.add('hidden');document.getElementById('stage-4').classList.remove('hidden');burstHearts(window.innerWidth/2,window.innerHeight/3,20)}
-let dodgeCount=0;const cuteDodgeLines=['Arey Jigglu, itna gussa accha nahi lagta! 😜','Maan jao na meri jaan 🥺','Kaju Barfi khilaunga, pakka! 🍬💖','Bhondu ki jaan logi kya ab? 😂','Yeh button kaam nahi karega ab 🙈','Sirf upar wala green button dabao ❤️'];
-function dodgeButton(){const btn=document.getElementById('runaway-btn');btn.innerText=cuteDodgeLines[dodgeCount%cuteDodgeLines.length];dodgeCount++;btn.style.transform=`translate(${Math.floor(Math.random()*130)-65}px, ${Math.floor(Math.random()*65)-32}px)`}
-function acceptForgiveness(){document.getElementById('final-buttons-box').classList.add('hidden');document.getElementById('celebration-pass').classList.remove('hidden');burstHearts(window.innerWidth*.25,window.innerHeight*.45,25);setTimeout(()=>burstHearts(window.innerWidth*.75,window.innerHeight*.45,25),200);setTimeout(()=>burstHearts(window.innerWidth*.5,window.innerHeight*.65,35),400)}
-function resetApp(){document.getElementById('stage-4').classList.add('hidden');document.getElementById('celebration-pass').classList.add('hidden');document.getElementById('final-buttons-box').classList.remove('hidden');const btn=document.getElementById('runaway-btn');btn.innerText='Abhi Bhi Thoda Gussa Hoon 😤';btn.style.transform='translate(0, 0)';dodgeCount=0;document.getElementById('stage-1').classList.remove('hidden')}
-function burstHearts(x,y,count){const icons=['💖','❤️','🌸','✨','👑','🍬','🥰'];for(let i=0;i<count;i++){const el=document.createElement('div');el.className='burst-emoji';el.innerText=icons[Math.floor(Math.random()*icons.length)];el.style.left=x+'px';el.style.top=y+'px';const angle=Math.random()*Math.PI*2;const dist=65+Math.random()*160;el.style.setProperty('--tx',`${Math.cos(angle)*dist}px`);el.style.setProperty('--ty',`${Math.sin(angle)*dist-45}px`);el.style.setProperty('--rot',`${Math.random()*360-180}deg`);document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}}
-</script>
+<body>
+
+  <!-- Audio Element -->
+  <audio id="mitwaAudio" loop preload="auto">
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Background Hearts -->
+  <div id="heartContainer"></div>
+
+  <!-- Proposal Card -->
+  <div class="card" id="mainCard">
+    <span class="badge">✨ For My Venus Star ✨</span>
+    <div style="font-size: 3.5rem; margin: 10px 0;">🌹👑✨</div>
+    <h1>Hey Beautiful...</h1>
+    <p>You bring so much harmony, warmth, and magic into my life. I have one ultimate question for you... 💖</p>
+    <h2 style="color: #ff0054; font-size: 1.5rem; margin-bottom: 20px;">Will you be my forever? 💍✨</h2>
+    
+    <div class="buttons">
+      <button class="btn" id="yesBtn" onclick="acceptProposal()">YES! 💖</button>
+      <button class="btn" id="noBtn" onclick="moveNo()" ontouchstart="moveNo()">No 😜</button>
+    </div>
+  </div>
+
+  <!-- Success Reveal Card -->
+  <div class="card" id="successCard">
+    <div style="font-size: 3rem; margin-bottom: 5px;">🎉🥂✨</div>
+    
+    <!-- Your Photo -->
+    <img src="IMG_20260822_215524_876.jpg" alt="Us Together" class="couple-photo" id="photo">
+
+    <!-- Your Video -->
+    <video class="couple-video" controls autoplay muted>
+      <source src="video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <h1 style="color: #ff0054; font-size: 1.5rem;">I knew it! 🥰💖</h1>
+    <p style="font-size: 1.15rem; font-weight: 600; color: #800f2f; margin-top: 10px;">
+      "Finally I fully belong to you and you are all mine now... koi bhi hme juda nhi kr skta!" 💍✨❤️
+    </p>
+  </div>
+
+  <script>
+    // Create Floating Hearts Background
+    const heartContainer = document.getElementById('heartContainer');
+    const emojis = ['💖', '🌸', '✨', '🌹', '💕', '⭐', '🍓'];
+    
+    for (let i = 0; i < 25; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart-bg';
+      heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDelay = Math.random() * 5 + 's';
+      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      heartContainer.appendChild(heart);
+    }
+
+    // Playful Dodging No Button & Growing Yes Button
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noTexts = [
+      "Are you sure? 🥺", 
+      "Nice try! 😜", 
+      "Wrong button! 💖", 
+      "Think again! 🌸", 
+      "You can't escape! ✨",
+      "Just tap YES! 👑"
+    ];
+    let yesScale = 1;
+    let textIdx = 0;
+
+    function moveNo() {
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 100);
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = Math.max(15, x) + 'px';
+      noBtn.style.top = Math.max(15, y) + 'px';
+
+      noBtn.innerText = noTexts[textIdx % noTexts.length];
+      textIdx++;
+
+      yesScale += 0.18;
+      yesBtn.style.transform = `scale(${yesScale})`;
+    }
+
+    function acceptProposal() {
+      // Play Music
+      const music = document.getElementById('mitwaAudio');
+      music.play().catch(e => console.log("Audio play blocked", e));
+
+      // Switch Screens
+      document.getElementById('mainCard').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
